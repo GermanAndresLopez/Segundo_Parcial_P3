@@ -10,8 +10,8 @@ namespace BLL
 {
     public class empleadoService
     {
-        empleadoRepository empleadoRepository;
 
+        private empleadoRepository empleadoRepository;
         public empleadoService()
         {
             empleadoRepository = new empleadoRepository();
@@ -59,6 +59,52 @@ namespace BLL
             return respuesta;
         }
 
+        public RespuestaListaEstado FiltradoPorEstados(string estado)
+        {
+            RespuestaListaEstado respuesta = new RespuestaListaEstado();
+            try
+            {
+                respuesta.Empleados = empleadoRepository.ListarPorEstado(estado);
+                if (respuesta.Empleados.Count == 0)
+                {
+                    respuesta.Mensaje = "No hay datos en el archivo";
+                }
+                else
+                {
+                    respuesta.Mensaje = "Datos Consultados correctamente";
+                }
+                return respuesta;
+            }
+            catch (Exception e)
+            {
+                respuesta.Mensaje = "ERROR DE ARCHIVO " + e.Message;
+                return respuesta;
+            }
+        }
+
+        public RespuestaListaEstado FiltradoPorNombre(string name)
+        {
+            RespuestaListaEstado respuesta = new RespuestaListaEstado();
+            try
+            {
+                respuesta.Empleados = empleadoRepository.ListarPorNombre(name);
+                if (respuesta.Empleados.Count == 0)
+                {
+                    respuesta.Mensaje = "No hay datos en el archivo";
+                }
+                else
+                {
+                    respuesta.Mensaje = "Datos Consultados correctamente";
+                }
+                return respuesta;
+            }
+            catch (Exception e)
+            {
+                respuesta.Mensaje = "ERROR DE ARCHIVO " + e.Message;
+                return respuesta;
+            }
+        }
+
 
     }
 
@@ -67,6 +113,12 @@ namespace BLL
         public IList<Empleados> Empleados { get; set; }
         public string Mensaje { get; set; }
         public bool Error { get; set; }
+    }
+
+    public class RespuestaListaEstado
+    {
+        public List<Empleados> Empleados { get; set; }
+        public string Mensaje { get; set; }
     }
 
 }

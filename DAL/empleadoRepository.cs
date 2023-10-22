@@ -30,10 +30,11 @@ namespace DAL
 
         public IList<Empleados> Consultar() 
         {
-            empleados = new List<Empleados>();
-            string line = string.Empty;
-            FileStream file = new FileStream(ruta,FileMode.OpenOrCreate,FileAccess.Read);
+            empleados.Clear();
+            
+            FileStream file = new FileStream(ruta,FileMode.OpenOrCreate);
             StreamReader reader = new StreamReader(file);
+            string line = string.Empty;
 
             while ((line = reader.ReadLine()) != null)
             {
@@ -55,6 +56,18 @@ namespace DAL
         {
             empleados = Consultar();
             return empleados.Where(p => p.identifiacion == id).FirstOrDefault();
+        }
+
+        public List<Empleados> ListarPorEstado(string tipo)
+        {
+            empleados = Consultar();
+            return empleados.Where(p => p.estado.Equals(tipo)).ToList();
+        }
+
+        public List<Empleados> ListarPorNombre(string name)
+        {
+            empleados = Consultar();
+            return empleados.Where(p => p.nombre.Equals(name)).ToList();
         }
 
     }

@@ -10,8 +10,16 @@ namespace Entity
     {
         public Empleados()
         {
-            salarioBase = 0;
         }
+
+        public Empleados(string id,string name,double salario,string estados)
+        {
+            identifiacion = id;
+            nombre = name;
+            salarioBase = salario;
+            estado = estados;
+        }
+
         public string identifiacion {  get; set; }
         public string nombre { get; set; }
         public double salarioBase { get; set; }
